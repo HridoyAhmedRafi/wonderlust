@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { CircleUser, Menu, X } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -9,14 +10,21 @@ import { cn } from "@/lib/utils";
 import WanderlastLogo from "@/app/assets/Wanderlast.png";
 
 const navLinks = [
-  { label: "Home", href: "/", active: true },
-  { label: "Destinations", href: "#" },
+  { label: "Home", href: "/" },
+  { label: "Destinations", href: "/destinations" },
+  { label: "Add Destination", href: "/add-destination" },
   { label: "My Bookings", href: "#" },
   { label: "Admin", href: "#" },
 ];
 
+/* "#" placeholders never count as active; detail pages keep their parent
+   link highlighted (e.g. /destinations/<id> → Destinations). */
+const isNavLinkActive = (href: string, pathname: string) =>
+  href === "#" ? false : href === "/" ? pathname === "/" : pathname.startsWith(href);
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background">
@@ -29,7 +37,7 @@ const Navbar = () => {
           onClick={() => setOpen(!open)}
           className={cn(
             buttonVariants({ variant: "ghost", size: "icon-sm" }),
-            "md:hidden"
+            "md:hidden",
           )}
         >
           {open ? <X /> : <Menu />}
@@ -41,8 +49,8 @@ const Navbar = () => {
               href={link.href}
               className={cn(
                 "text-sm font-semibold transition-colors hover:text-foreground/70",
-                link.active &&
-                  "text-cyan-700 hover:text-cyan-700 underline decoration-2 underline-offset-8"
+                isNavLinkActive(link.href, pathname) &&
+                  "text-cyan-700 hover:text-cyan-700 underline decoration-2 underline-offset-8",
               )}
             >
               {link.label}
@@ -71,7 +79,7 @@ const Navbar = () => {
             aria-label="Profile"
             className={cn(
               buttonVariants({ variant: "ghost", size: "sm" }),
-              "gap-1.5 px-2"
+              "gap-1.5 px-2",
             )}
           >
             <CircleUser className="size-4" />
@@ -81,7 +89,7 @@ const Navbar = () => {
             href="#"
             className={cn(
               buttonVariants({ variant: "ghost", size: "sm" }),
-              "hidden sm:inline-flex"
+              "hidden sm:inline-flex",
             )}
           >
             Login
@@ -108,7 +116,7 @@ const Navbar = () => {
               onClick={() => setOpen(false)}
               className={cn(
                 "block py-2.5 text-sm font-semibold",
-                link.active && "text-cyan-700"
+                isNavLinkActive(link.href, pathname) && "text-cyan-700",
               )}
             >
               {link.label}
