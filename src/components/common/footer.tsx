@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import NewsletterForm from "@/components/newsletter-form";
+import NewsletterForm from "@/components/common/newsletter-form";
 
 const quickLinks = ["Home", "Destinations", "My Bookings", "My Profile"];
 const supportLinks = ["Help Center", "Terms of Service", "Privacy Policy"];

@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Loading() {
   return (
     <div className="w-full">
-      <Skeleton className="h-[calc(100svh-4rem)] min-h-[560px] w-full rounded-none" />
+      <Skeleton className="h-[calc(100svh-4rem)] min-h-140 w-full rounded-none" />
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-16 text-center">
         <Skeleton className="h-8 w-72 max-w-full" />
         <Skeleton className="mt-4 h-4 w-96 max-w-full" />

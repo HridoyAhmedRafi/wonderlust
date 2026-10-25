@@ -12,7 +12,7 @@ const searchFields = [
 
 const Banner = () => {
   return (
-    <section className="relative min-h-[560px] h-[calc(100svh-4rem)]">
+    <section className="relative min-h-140 h-[calc(100svh-4rem)]">
       <Image
         src={BannerImage}
         alt=""
@@ -20,7 +20,7 @@ const Banner = () => {
         priority
         className="-z-10 object-cover"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/30 via-black/10 to-black/40" />
+      <div className="absolute inset-0 -z-10 bg-linear-to-b from-black/30 via-black/10 to-black/40" />
 
       {/* Headline + calls to action */}
       <div className="flex flex-col items-center px-6 pt-20 text-center text-white md:pt-28">

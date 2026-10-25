@@ -7,13 +7,13 @@ import {
   CalendarIcon,
   CheckIcon,
   MapPinIcon,
-  SquarePenIcon,
   StarIcon,
-  XIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Destination } from "@/lib/destinations";
+import type { IDestination } from "@/lib/destinations";
+import { EditDestination } from "@/components/destination/EditDestination";
+import DeleteDestination from "@/components/destination/DeleteDestination";
 
 const API_URL = "http://localhost:5000/destinations";
 
@@ -112,14 +112,14 @@ const DestinationDetailsPage = async ({
 }) => {
   const { id } = await params;
 
-  let destination: Destination | null = null;
+  let destination: IDestination | null = null;
 
   try {
     const res = await fetch(`${API_URL}/${id}`);
     if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
     const payload: unknown = await res.json();
     if (payload && typeof payload === "object" && "name" in payload) {
-      destination = payload as Destination;
+      destination = payload as IDestination;
     }
   } catch {
     /* API unreachable, unknown id, or a malformed payload → 404 page.
@@ -146,34 +146,31 @@ const DestinationDetailsPage = async ({
         </Link>
         <div className="flex items-center gap-2">
           {/* Static until an edit destination flow exists. */}
-          <Button variant="outline">
-            <SquarePenIcon data-icon="inline-start" className="size-3.5" />
-            Edit
-          </Button>
-          <Button
-            nativeButton={false}
-            render={<Link href="/destinations" />}
-          >
-            <XIcon data-icon="inline-start" className="size-3.5" />
-            Cancel
-          </Button>
+
+          <EditDestination destination={destination}></EditDestination>
+          <DeleteDestination destination={destination}></DeleteDestination>
         </div>
       </div>
 
       {/* Hero image */}
       <div className="relative mt-4 aspect-[16/7] overflow-hidden rounded-lg">
-        <Image
-          src={destination.imageUrl}
-          alt={destination.name}
-          fill
-          priority
-          sizes="(min-width: 1152px) 1152px, 100vw"
-          className="object-cover"
-        />
+        {destination.imageUrl ? (
+          <Image
+            src={destination.imageUrl}
+            alt={destination.name}
+            fill
+            sizes="(min-width: 768px) 33vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            No image available
+          </div>
+        )}
       </div>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-3">
-        {/* Destination info, overview and highlights */}
+        {/* IDestination info, overview and highlights */}
         <div className="lg:col-span-2">
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">

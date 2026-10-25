@@ -65,7 +65,6 @@ const AddDestinationPage = () => {
       });
 
       const data = await res.json();
-      console.log(data);
       if (data.acknowledged === true) {
         toast.success("Destination Added successfully");
         setForm(EMPTY_PACKAGE);

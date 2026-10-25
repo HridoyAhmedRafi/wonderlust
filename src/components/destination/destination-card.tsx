@@ -6,7 +6,7 @@ import {
   MapPinIcon,
   StarIcon,
 } from "lucide-react";
-import type { Destination } from "@/lib/destinations";
+import type { IDestination } from "@/lib/destinations";
 
 /* Rating is not part of the API payload yet; 4.5 matches the mock.
    Add `rating` to the payload to make this real. */
@@ -19,17 +19,23 @@ function formatDuration(duration: string) {
   return `${days} Days/${nights} Nights`;
 }
 
-const DestinationCard = ({ destination }: { destination: Destination }) => {
+const DestinationCard = ({ destination }: { destination: IDestination }) => {
   return (
     <article>
       <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
-        <Image
-          src={destination.imageUrl}
-          alt={destination.name}
-          fill
-          sizes="(min-width: 768px) 33vw, 100vw"
-          className="object-cover"
-        />
+        {destination.imageUrl ? (
+          <Image
+            src={destination.imageUrl}
+            alt={destination.name}
+            fill
+            sizes="(min-width: 768px) 33vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            No image available
+          </div>
+        )}
         <span className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-white py-1 pr-2.5 pl-3 text-xs font-semibold text-foreground shadow-sm">
           {RATING}
           <StarIcon className="size-3 fill-current" />

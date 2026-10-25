@@ -1,19 +1,20 @@
 import Link from "next/link";
 import { CircleAlertIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Destination } from "@/lib/destinations";
-import DestinationCard from "@/components/destination-card";
+
+import DestinationCard from "@/components/destination/destination-card";
+import { IDestination } from "@/lib/destinations";
 
 const API_URL = "http://localhost:5000/destinations";
 
 const DestinationsPage = async () => {
-  let destinations: Destination[] | null = null;
+  let destinations: IDestination[] | null = null;
 
   try {
     const res = await fetch(API_URL);
     if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
     const payload: unknown = await res.json();
-    destinations = Array.isArray(payload) ? (payload as Destination[]) : null;
+    destinations = Array.isArray(payload) ? (payload as IDestination[]) : null;
   } catch {
     /* Backend unreachable or malformed response — the page renders an error
        state below instead of inventing data. */

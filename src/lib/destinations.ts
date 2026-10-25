@@ -1,6 +1,4 @@
-/* Shape of the destination payload served by the backend API.
-   The backend/database is the single source of truth — no UI-side mock data. */
-export type Destination = {
+export interface IDestination {
   _id: string;
   name: string;
   country: string;
@@ -10,4 +8,4 @@ export type Destination = {
   departureDate: string;
   imageUrl: string;
   description: string;
-};
+}
