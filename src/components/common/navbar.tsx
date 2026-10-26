@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { CircleUser, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import WanderlastLogo from "@/app/assets/Wanderlast.png";
+import SessionButton from "../user-session/SessionButton";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -20,7 +21,11 @@ const navLinks = [
 /* "#" placeholders never count as active; detail pages keep their parent
    link highlighted (e.g. /destinations/<id> → Destinations). */
 const isNavLinkActive = (href: string, pathname: string) =>
-  href === "#" ? false : href === "/" ? pathname === "/" : pathname.startsWith(href);
+  href === "#"
+    ? false
+    : href === "/"
+      ? pathname === "/"
+      : pathname.startsWith(href);
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -73,33 +78,8 @@ const Navbar = () => {
         </Link>
 
         {/* Right: account links */}
-        <div className="flex items-center gap-1 md:gap-2">
-          <Link
-            href="#"
-            aria-label="Profile"
-            className={cn(
-              buttonVariants({ variant: "ghost", size: "sm" }),
-              "gap-1.5 px-2",
-            )}
-          >
-            <CircleUser className="size-4" />
-            <span className="hidden sm:inline">Profile</span>
-          </Link>
-          <Link
-            href="#"
-            className={cn(
-              buttonVariants({ variant: "ghost", size: "sm" }),
-              "hidden sm:inline-flex",
-            )}
-          >
-            Login
-          </Link>
-          <Link
-            href="#"
-            className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
-          >
-            Sign Up
-          </Link>
+        <div>
+          <SessionButton></SessionButton>
         </div>
       </div>
 
