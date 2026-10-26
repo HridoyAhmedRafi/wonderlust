@@ -3,36 +3,22 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   ArrowLeftIcon,
-  ArrowRightIcon,
   CalendarIcon,
   CheckIcon,
   MapPinIcon,
   StarIcon,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import type { IDestination } from "@/lib/destinations";
 import { EditDestination } from "@/components/destination/EditDestination";
 import DeleteDestination from "@/components/destination/DeleteDestination";
+import BookingSection from "@/components/booking/BookingSection";
 
 const API_URL = "http://localhost:5000/destinations";
 
-/* Rating and reviews are not part of the API payload yet — presentation-only
-   fallbacks, consistent with destination-card. Add them to the payload to
-   make this real. */
 const RATING = 4.5;
 const REVIEW_COUNT = 24;
 
-/* Perks shown on the booking card (presentation-only until the backend
-   models them). */
-const INCLUDED_FEATURES = [
-  "Free cancellation up to 7 days",
-  "Travel insurance Included",
-  "24/7 customer support",
-];
-
-/* Highlight picks per category for the two-column checklist
-   (presentation-only until the backend models them). */
 const HIGHLIGHTS: Record<string, string[]> = {
   Beach: [
     "Beachfront accommodation",
@@ -83,6 +69,7 @@ const HIGHLIGHTS: Record<string, string[]> = {
     "Local nightlife tour",
   ],
 };
+
 const DEFAULT_HIGHLIGHTS = [
   "Guided local tour",
   "All entry tickets included",
@@ -95,14 +82,6 @@ function formatDuration(duration: string) {
   if (!Number.isFinite(days) || days <= 0) return duration;
   const nights = Math.max(days - 1, 0);
   return `${days} Days / ${nights} Nights`;
-}
-
-/* Formats the API's ISO date (2026-10-28) as 10/28/2026 without timezone
-   side effects; falls back to the raw string. */
-function formatDeparture(departureDate: string) {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(departureDate);
-  if (!match) return departureDate;
-  return `${match[2]}/${match[3]}/${match[1]}`;
 }
 
 const DestinationDetailsPage = async ({
@@ -221,45 +200,7 @@ const DestinationDetailsPage = async ({
         </div>
 
         {/* Booking card */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-lg border bg-card p-6 shadow-sm">
-            <p className="text-sm text-muted-foreground">Starting from</p>
-            <p className="mt-1 text-4xl font-bold text-cyan-600">
-              ${destination.price}
-            </p>
-            <p className="text-xs text-muted-foreground">per person</p>
-
-            <div className="mt-5">
-              <label
-                htmlFor="departure-date"
-                className="mb-1.5 block text-xs font-medium text-muted-foreground"
-              >
-                Departure date
-              </label>
-              <Input
-                id="departure-date"
-                readOnly
-                value={formatDeparture(destination.departureDate)}
-                className="h-10 cursor-default bg-muted/60"
-              />
-            </div>
-
-            {/* Presentational until a booking flow exists. */}
-            <Button className="mt-5 h-10 w-full bg-cyan-600 text-white hover:bg-cyan-700">
-              Book Now
-              <ArrowRightIcon data-icon="inline-end" />
-            </Button>
-
-            <ul className="mt-6 space-y-2.5">
-              {INCLUDED_FEATURES.map((feature) => (
-                <li key={feature} className="flex items-center gap-2 text-sm">
-                  <CheckIcon className="size-4 shrink-0 text-cyan-600" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
+        <BookingSection destination={destination}></BookingSection>
       </div>
     </div>
   );
