@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import { IDestination } from "@/lib/destinations";
 import { useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const INCLUDED_FEATURES = [
   "Free cancellation up to 7 days",
@@ -15,10 +16,16 @@ const INCLUDED_FEATURES = [
 ];
 
 const BookingSection = ({ destination }: { destination: IDestination }) => {
+  const router = useRouter();
   const { data: session } = useSession();
   const user = session?.user;
   const hanldeBook = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!user) {
+      router.push("/sign-in");
+      return;
+    }
+
     const departureDate = (
       e.currentTarget.elements.namedItem("departureDate") as HTMLInputElement
     ).value;
@@ -46,6 +53,9 @@ const BookingSection = ({ destination }: { destination: IDestination }) => {
     // console.log("Response:", backendRes);
     if (backendRes.acknowledged === true) {
       toast.success("Booking done");
+    }
+    if (backendRes.status) {
+      toast.error("Alrady added");
     }
   };
 

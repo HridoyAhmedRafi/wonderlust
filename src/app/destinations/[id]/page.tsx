@@ -132,7 +132,7 @@ const DestinationDetailsPage = async ({
       </div>
 
       {/* Hero image */}
-      <div className="relative mt-4 aspect-[16/7] overflow-hidden rounded-lg">
+      <div className="relative mt-4 aspect-16/7 overflow-hidden rounded-lg">
         {destination.imageUrl ? (
           <Image
             src={destination.imageUrl}

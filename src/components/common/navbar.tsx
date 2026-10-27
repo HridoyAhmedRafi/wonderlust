@@ -15,7 +15,7 @@ const navLinks = [
   { label: "Destinations", href: "/destinations" },
   { label: "Add Destination", href: "/add-destination" },
   { label: "My Bookings", href: "/my-bookings" },
-  { label: "Admin", href: "#" },
+ 
 ];
 
 /* "#" placeholders never count as active; detail pages keep their parent

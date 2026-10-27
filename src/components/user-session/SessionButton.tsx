@@ -11,6 +11,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 const SessionButton = () => {
   const { data: session } = useSession();
@@ -18,6 +20,8 @@ const SessionButton = () => {
 
   const handleSignOut = () => {
     signOut();
+    toast.success("You have been signed out");
+    redirect("/sign-in");
   };
   return (
     <div className="flex items-center gap-1 md:gap-2">
@@ -59,7 +63,6 @@ const SessionButton = () => {
           <PopoverContent align="end" className="w-50 p-1">
             <div className="rounded-sm px-3 py-2 text-sm hover:bg-accent">
               <p>{user?.name}</p>
-              <p>{user?.email}</p>
             </div>
             <Link
               href="/profile"
