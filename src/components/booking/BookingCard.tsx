@@ -16,6 +16,7 @@ import type { IBooking } from "@/lib/bookings";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { getClientToken } from "@/lib/getClientToken";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
@@ -48,8 +49,12 @@ const BookingCard = ({ booking }: { booking: IBooking }) => {
   const StatusIcon = status.icon;
 
   const hanldeDelete = async () => {
+    const token = await getClientToken();
     const res = await fetch(`http://localhost:5000/bookings/${booking._id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
     const data = await res.json();
     if (data.acknowledged) {

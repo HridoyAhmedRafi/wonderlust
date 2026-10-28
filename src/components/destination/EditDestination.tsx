@@ -27,6 +27,7 @@ import {
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { IDestination } from "@/lib/destinations";
+import { getClientToken } from "@/lib/getClientToken";
 
 const CATEGORIES = [
   "Beach",
@@ -58,6 +59,7 @@ export function EditDestination({
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
+    const token = await getClientToken();
 
     const { _id, ...payload } = form;
     setSaving(true);
@@ -67,6 +69,7 @@ export function EditDestination({
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });

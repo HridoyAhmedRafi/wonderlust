@@ -8,6 +8,7 @@ import { IDestination } from "@/lib/destinations";
 import { useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { getClientToken } from "@/lib/getClientToken";
 
 const INCLUDED_FEATURES = [
   "Free cancellation up to 7 days",
@@ -21,13 +22,15 @@ const BookingSection = ({ destination }: { destination: IDestination }) => {
   const user = session?.user;
   const hanldeBook = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const token = await getClientToken();
     if (!user) {
       router.push("/sign-in");
       return;
     }
 
     const departureDate = (
-      e.currentTarget.elements.namedItem("departureDate") as HTMLInputElement
+      form.elements.namedItem("departureDate") as HTMLInputElement
     ).value;
 
     const { _id, ...destinationFields } = destination;
@@ -45,6 +48,7 @@ const BookingSection = ({ destination }: { destination: IDestination }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     });

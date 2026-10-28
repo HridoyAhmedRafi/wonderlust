@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import toast from "react-hot-toast";
+import { getClientToken } from "@/lib/getClientToken";
 
 const CATEGORIES = [
   "Beach",
@@ -51,6 +52,9 @@ const AddDestinationPage = () => {
 
   const handleAddPackage = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const token = await getClientToken();
+
     const newPackage: DestinationPackage = { ...form };
 
     setSaving(true);
@@ -60,12 +64,14 @@ const AddDestinationPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newPackage),
       });
 
-      const data = await res.json();
-      if (data.acknowledged === true) {
+      const result = await res.json();
+
+      if (result.insertedId) {
         toast.success("Destination Added successfully");
         setForm(EMPTY_PACKAGE);
       } else {
