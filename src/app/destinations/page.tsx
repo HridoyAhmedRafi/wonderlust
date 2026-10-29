@@ -11,7 +11,9 @@ const DestinationsPage = async () => {
   let destinations: IDestination[] | null = null;
 
   try {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, {
+      cache: "no-store",
+    });
     if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
     const payload: unknown = await res.json();
     destinations = Array.isArray(payload) ? (payload as IDestination[]) : null;
