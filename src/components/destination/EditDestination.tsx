@@ -65,14 +65,17 @@ export function EditDestination({
     setSaving(true);
     try {
       // API calling.
-      const res = await fetch(`http://localhost:5000/destinations/${_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/destinations/${_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
         },
-        body: JSON.stringify(payload),
-      });
+      );
 
       if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
       const data = await res.json();

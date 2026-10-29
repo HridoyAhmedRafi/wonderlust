@@ -2,7 +2,9 @@ import DestinationCard from "@/components/destination/destination-card";
 import { IDestination } from "@/lib/destinations";
 
 const FeaturedDestinations = async () => {
-  const res = await fetch("http://localhost:5000/featured-destinations");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/featured-destinations`,
+  );
   const data = await res.json();
 
   return (

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import DestinationCard from "@/components/destination/destination-card";
 import { IDestination } from "@/lib/destinations";
 
-const API_URL = "http://localhost:5000/destinations";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/destinations`;
 
 const DestinationsPage = async () => {
   let destinations: IDestination[] | null = null;

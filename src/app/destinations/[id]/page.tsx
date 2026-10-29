@@ -14,7 +14,7 @@ import { EditDestination } from "@/components/destination/EditDestination";
 import DeleteDestination from "@/components/destination/DeleteDestination";
 import BookingSection from "@/components/booking/BookingSection";
 
-const API_URL = "http://localhost:5000/destinations";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/destinations`;
 
 const RATING = 4.5;
 const REVIEW_COUNT = 24;

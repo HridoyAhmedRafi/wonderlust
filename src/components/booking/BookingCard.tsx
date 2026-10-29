@@ -50,12 +50,15 @@ const BookingCard = ({ booking }: { booking: IBooking }) => {
 
   const hanldeDelete = async () => {
     const token = await getClientToken();
-    const res = await fetch(`http://localhost:5000/bookings/${booking._id}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/bookings/${booking._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     const data = await res.json();
     if (data.acknowledged) {
       router.refresh();

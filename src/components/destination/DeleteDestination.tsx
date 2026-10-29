@@ -24,7 +24,7 @@ const DeleteDestination = ({ destination }: { destination: IDestination }) => {
   const handleDelete = async () => {
     const token = await getClientToken();
     const res = await fetch(
-      `http://localhost:5000/destinations/${destination._id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/destinations/${destination._id}`,
       {
         method: "DELETE",
         headers: {

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "My Bookings",
 };
 
-const API_URL = "http://localhost:5000/bookings";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/bookings`;
 
 const MyBookingsPage = async () => {
   const session = await auth.api.getSession({
