@@ -5,7 +5,6 @@ import Testimonials from "@/components/home/testimonials";
 import WhyChoose from "@/components/home/why-choose";
 
 const HomePage = () => {
-  
   return (
     <>
       <Banner />
